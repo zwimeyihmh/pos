@@ -44,10 +44,10 @@ function printInput(inputs,promot) {
       allMoney = inputs[i].count*inputs[i].price;
     }
     sum += allMoney;
-    result += '名称：' + inputs[i].name + '，数量：' + inputs[i].count + inputs[i].unit + '，单价：'+ inputs[i].price + '(元)，小计：' +   allMoney+'(元)\n';
+    result += '名称：' + inputs[i].name + '，数量：' + inputs[i].count + inputs[i].unit + '，单价：'+ inputs[i].price.toFixed(2) + '(元)，小计：' + allMoney.toFixed(2) +'(元)\n';
   }
-  promo += '----------------------\n总计：' + sum + '(元)\n' + '节省：' + save + '(元)\n';
-  result += '----------------------\n' + promo + '\n**********************'
+  promo += '----------------------\n总计：' + sum.toFixed(2) + '(元)\n' + '节省：' + save.toFixed(2) + '(元)\n';
+  result += '----------------------\n' + promo + '**********************'
   console.log(result);
 }
 

@@ -7,9 +7,9 @@ function printReceipt(inputs) {
     var count = SameName(i,inputs);
     var allMoney = count * inputs[i].price;
     sum += allMoney;
-    result += '名称：' + inputs[i].name + '，数量：' + count + inputs[i].unit + '，单价：'+ inputs[i].price + '.00(元)，小计：' +   allMoney+'.00(元)\n';
+    result += '名称：' + inputs[i].name + '，数量：' + count + inputs[i].unit + '，单价：'+ inputs[i].price.toFixed(2) + '(元)，小计：' +   allMoney.toFixed(2)+'(元)\n';
   }
-  result += '----------------------\n总计：' + sum + '.00(元)\n**********************';
+  result += '----------------------\n总计：' + sum.toFixed(2) + '(元)\n**********************';
   console.log(result);
 }
 function SameName(i,inputs){
