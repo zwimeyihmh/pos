@@ -1,42 +1,43 @@
-function printReceipt(inputs) {
-  var items = getCartItems(inputs);
+function printReceipt(tags) {
+  var items = getCartItems(tags);
   var promotions = getPromotions(items);
   var receipt = '';
   receipt = '***<没钱赚商店>收据***\n'
-    + getItemsString(items)
-    + '----------------------\n'
-    +'挥泪赠送商品：\n'
-    + getPromotionsString(promotions)
-    + '----------------------\n'
-    + '总计：' + formatPrice(promotionsPrice(items,promotions)) +'(元)\n'
-    +'节省：' + formatPrice(getAmount(promotions)) + '(元)\n**********************';
+  + getItemsString(items)
+  + '----------------------\n'
+  + '挥泪赠送商品：\n'
+  + getPromotionsString(promotions)
+  + '----------------------\n'
+  + '总计：' + formatPrice(promotionsPrice(items, promotions)) + '(元)\n'
+  + '节省：' + formatPrice(getAmount(promotions)) + '(元)\n**********************';
   console.log(receipt);
 }
-function getCartItems(items) {
+function getCartItems(tags) {
   var cartItems = [];
-  items.forEach(function (item) {
+  tags.forEach(function (tag) {
     var count = 1;
-    if (item.length > 10) {
-      count = parseInt(item.substring(11), 10);
-      item = item.substring(0, 10);
+    if (tag.indexOf('-') != -1) {
+      var arrayTag = tag.split('-');
+      count = parseInt(arrayTag[1]);
+      tag = arrayTag[0];
     }
-   getItems(item,count,cartItems);
+    getItem(tag, count, cartItems);
   });
   return cartItems;
 }
-function getItems(item,count,cartItems){
-  var cartItem = findCartItems(item, cartItems);
+function getItem(barcode, count, cartItems) {
+  var cartItem = findFromCartItem(barcode, cartItems);
   if (cartItem) {
     (cartItem.count) += count;
   } else {
-    var allItem = findAllItems(item);
-    if (allItem) {
-      cartItems.push({item: allItem, count: count}) ;
+    var item = findFromAllItems(barcode);
+    if (item) {
+      cartItems.push({item: item, count: count});
     }
   }
 }
 
-function findCartItems(barcode, cartItems) {
+function findFromCartItem(barcode, cartItems) {
   var item;
   cartItems.forEach(function (cartItem) {
     if (barcode === cartItem.item.barcode) {
@@ -45,25 +46,26 @@ function findCartItems(barcode, cartItems) {
   });
   return item;
 }
-function findAllItems(barcodes) {
+
+function findFromAllItems(barcode) {
   var allItems = loadAllItems();
   var cartItem;
   allItems.forEach(function (allItem) {
-    if (barcodes === allItem.barcode) {
+    if (barcode === allItem.barcode) {
       cartItem = allItem;
     }
   });
   return cartItem;
 }
 
-function getPromotions(items){
-  var promotion ;
+function getPromotions(cartItems) {
+  var promotion;
   var promotions = [];
-  items.forEach(function(item){
+  cartItems.forEach(function (item) {
     promotion = promoteItems(item.item);
-     if(promotion){
-     promotions.push({item:promotion,count:1});
-     }
+    if (promotion) {
+      promotions.push({item: promotion, count: Math.floor(item.count/3)});
+    }
   });
   return promotions;
 }
@@ -83,26 +85,27 @@ function getItemsString(items) {
   items.forEach(function (item) {
     var cartItem = item.item;
     var subTotal = getSubTotal(item.count, cartItem.price);
-    if(promoteItems(cartItem)){
-      subTotal = getSubTotal((item.count - 1),cartItem.price);
+    if (promoteItems(cartItem)) {
+      subTotal = getSubTotal((item.count - 1), cartItem.price);
     }
     itemsString += '名称：' + cartItem.name
-      + '，数量：' + item.count + cartItem.unit + '，单价：'
-      + formatPrice(cartItem.price) + '(元)，小计：'
-      + formatPrice(subTotal) + '(元)\n';
+    + '，数量：' + item.count + cartItem.unit + '，单价：'
+    + formatPrice(cartItem.price) + '(元)，小计：'
+    + formatPrice(subTotal) + '(元)\n';
   });
   return itemsString;
 }
 
 function getPromotionsString(promotions) {
   var promotionsSting = '';
-  promotions.forEach(function(promotion){
+  promotions.forEach(function (promotion) {
     var item = promotion.item;
     promotionsSting += '名称：' + item.name
-      +'，数量：1' + item.unit + '\n';
+    + '，数量：1' + item.unit + '\n';
   });
   return promotionsSting;
 }
+
 function getAmount(items) {
   var amount = 0;
   items.forEach(function (item) {
@@ -116,7 +119,7 @@ function getSubTotal(count, price) {
   return count * price;
 }
 
-function promotionsPrice(items,promotions){
+function promotionsPrice(items, promotions) {
   return getAmount(items) - getAmount(promotions);
 }
 
