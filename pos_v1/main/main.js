@@ -16,7 +16,8 @@ function getCartItems(tags) {
   var cartItems = [];
   tags.forEach(function (tag) {
     var count = 1;
-    if (tag.indexOf('-') != -1) {
+    var ifExist = tag.indexOf('-');
+    if (ifExist) {
       var arrayTag = tag.split('-');
       count = parseInt(arrayTag[1]);
       tag = arrayTag[0];
