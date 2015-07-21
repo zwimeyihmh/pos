@@ -8,7 +8,7 @@ function printReceipt(tags) {
   + '挥泪赠送商品：\n'
   + getPromotionsString(promotions)
   + '----------------------\n'
-  + '总计：' + formatPrice(promotionsPrice(items, promotions)) + '(元)\n'
+  + '总计：' + formatPrice(cartItemsPrice(items, promotions)) + '(元)\n'
   + '节省：' + formatPrice(getAmount(promotions)) + '(元)\n**********************';
   console.log(receipt);
 }
@@ -61,23 +61,24 @@ function findFromAllItems(barcode) {
 function getPromotions(cartItems) {
   var promotion;
   var promotions = [];
-  cartItems.forEach(function (item) {
-    promotion = promoteItems(item.item);
+  cartItems.forEach(function (cartItem) {
+    promotion = promoteItems(cartItem.item);
     if (promotion) {
-      promotions.push({item: promotion, count: Math.floor(item.count/3)});
+      promotions.push({item: promotion, count: Math.floor(cartItem.count/3)});
     }
   });
   return promotions;
 }
 function promoteItems(item) {
-  var promotionsLoad = loadPromotions()[0].barcodes;
-  var itemPromotion;
-  promotionsLoad.forEach(function (promotion) {
-    if (item.barcode === promotion) {
-      itemPromotion = item;
+  var promotionsLoad = loadPromotions();
+  var promotionsBarcode = promotionsLoad[0].barcodes;
+  var promotion;
+  promotionsBarcode.forEach(function (promotionBarcode) {
+    if (item.barcode === promotionBarcode) {
+      promotion = item;
     }
   });
-  return itemPromotion;
+  return promotion;
 }
 
 function getItemsString(items) {
@@ -101,7 +102,7 @@ function getPromotionsString(promotions) {
   promotions.forEach(function (promotion) {
     var item = promotion.item;
     promotionsSting += '名称：' + item.name
-    + '，数量：1' + item.unit + '\n';
+    + '，数量：' + promotion.count + item.unit + '\n';
   });
   return promotionsSting;
 }
@@ -119,7 +120,7 @@ function getSubTotal(count, price) {
   return count * price;
 }
 
-function promotionsPrice(items, promotions) {
+function cartItemsPrice(items, promotions) {
   return getAmount(items) - getAmount(promotions);
 }
 
