@@ -7,4 +7,8 @@ function PromotedItem(barcode,name,price,count,unit){
 }
 PromotedItem.prototype.subTotal = function(){
   return this.count * this.price;
+};
+PromotedItem.prototype.getString = function(){
+  return  ('名称：' + this.name
+  + '，数量：' + this.count + this.unit + '\n');
 }
