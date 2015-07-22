@@ -1,3 +1,10 @@
-/**
- * Created by wx on 7/22/15.
- */
+function PromotedItem(barcode,name,price,count,unit){
+  this.barcode = barcode;
+  this.name = name;
+  this.price = price;
+  this.count = count;
+  this.unit = unit;
+}
+PromotedItem.prototype.subTotal = function(){
+  return this.count * this.price;
+}
