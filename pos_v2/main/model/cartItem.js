@@ -16,4 +16,3 @@ CartItem.prototype.getString = function(){
   + formatPrice(this.price) + '(元)，小计：'
   + formatPrice((this.count - this.givenCount)*this.price) + '(元)\n')
 }
-

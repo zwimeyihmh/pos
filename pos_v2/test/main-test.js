@@ -33,7 +33,6 @@ describe('pos', function() {
       minute = dateDigitToString(currentDate.getMinutes()),
       second = dateDigitToString(currentDate.getSeconds()),
       formattedDateString = year + '年' + month + '月' + date + '日 ' + hour + ':' + minute + ':' + second;
-
     var expectText =
       '***<没钱赚商店>收据***\n' +
       '打印时间：' + formattedDateString + '\n' +
