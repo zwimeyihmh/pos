@@ -17,9 +17,10 @@ function getCartItems(tags) {
   tags.forEach(function (tag) {
     var count = 1;
     var ifExist = tag.indexOf('-');
-    if (ifExist) {
+    if (ifExist !== -1) {
       var arrayTag = tag.split('-');
       count = parseInt(arrayTag[1]);
+      console.log(count);
       tag = arrayTag[0];
     }
     getItem(tag, count, cartItems);
@@ -88,7 +89,7 @@ function getItemsString(items) {
     var cartItem = item.item;
     var subTotal = getSubTotal(item.count, cartItem.price);
     if (promoteItems(cartItem)) {
-      subTotal = getSubTotal((item.count - 1), cartItem.price);
+      subTotal = getSubTotal(item.count - Math.floor(item.count/3), cartItem.price);
     }
     itemsString += '名称：' + cartItem.name
     + '，数量：' + item.count + cartItem.unit + '，单价：'
@@ -128,5 +129,3 @@ function cartItemsPrice(items, promotions) {
 function formatPrice(price) {
   return price.toFixed(2);
 }
-
-
