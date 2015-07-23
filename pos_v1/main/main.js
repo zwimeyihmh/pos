@@ -19,7 +19,7 @@ function getCartItems(tags) {
     var ifExist = tag.indexOf('-');
     if (ifExist !== -1) {
       var arrayTag = tag.split('-');
-      count = parseInt(arrayTag[1]);
+      count = parseFloat(arrayTag[1]);
       console.log(count);
       tag = arrayTag[0];
     }
