@@ -5,6 +5,7 @@ function PromotedItem(barcode,name,price,count,unit){
   this.count = count;
   this.unit = unit;
 }
+
 PromotedItem.prototype.subTotal = function(){
   return this.count * this.price;
 };

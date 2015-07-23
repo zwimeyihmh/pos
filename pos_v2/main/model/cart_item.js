@@ -11,6 +11,7 @@ CartItem.prototype.subTotal = function(){
   return this.price * this.count;
 }
 CartItem.prototype.getString = function(){
+  console.log(this.givenCount);
   return ('名称：' + this.name
   + '，数量：' + this.count + this.unit + '，单价：'
   + formatPrice(this.price) + '(元)，小计：'
