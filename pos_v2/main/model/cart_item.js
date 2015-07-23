@@ -1,4 +1,4 @@
-function CartItem(barcode, name, unit, price,count,givenCount) {
+function CartItem(barcode, name, unit, price, count, givenCount) {
   this.barcode = barcode;
   this.name = name;
   this.unit = unit;
@@ -7,13 +7,15 @@ function CartItem(barcode, name, unit, price,count,givenCount) {
   this.givenCount = givenCount;
 
 }
-CartItem.prototype.subTotal = function(){
+
+CartItem.prototype.subTotal = function () {
   return this.price * this.count;
-}
-CartItem.prototype.getString = function(){
+};
+
+CartItem.prototype.getString = function () {
   console.log(this.givenCount);
   return ('名称：' + this.name
-  + '，数量：' + this.count + this.unit + '，单价：'
-  + formatPrice(this.price) + '(元)，小计：'
-  + formatPrice((this.count - this.givenCount)*this.price) + '(元)\n')
-}
+      + '，数量：' + this.count + this.unit
+      + '，单价：' + formatPrice(this.price) + '(元)，'
+      + '小计：' + formatPrice((this.count - this.givenCount) * this.price) + '(元)\n')
+};

@@ -2,10 +2,11 @@ function Receipt(cartItems, promotions) {
   this.cartItems = cartItems;
   this.promotions = promotions;
 }
-Receipt.prototype.printed = function(){
+
+Receipt.prototype.printed = function () {
   var nowData = new GetData();
   return ('***<没钱赚商店>收据***\n'
-  +'打印时间：' + nowData.get() + '\n'
+  + '打印时间：' + nowData.get() + '\n'
   + '----------------------\n'
   + this.getItemsString()
   + '----------------------\n'
@@ -16,7 +17,7 @@ Receipt.prototype.printed = function(){
   + '节省：' + formatPrice(this.getPromotedAmount()) + '(元)\n**********************');
 };
 
-Receipt.prototype.getAmount = function(){
+Receipt.prototype.getAmount = function () {
   var amount = 0;
   this.cartItems.forEach(function (cartItem) {
     amount += cartItem.subTotal();
@@ -24,7 +25,7 @@ Receipt.prototype.getAmount = function(){
   return amount;
 };
 
-Receipt.prototype.getPromotedAmount = function(){
+Receipt.prototype.getPromotedAmount = function () {
   var amount = 0;
   this.promotions.forEach(function (promotion) {
     amount += promotion.subTotal();
@@ -33,10 +34,10 @@ Receipt.prototype.getPromotedAmount = function(){
 };
 
 Receipt.prototype.cartItemsPrice = function cartItemsPrice() {
-    return (this.getAmount() - this.getPromotedAmount());
+  return (this.getAmount() - this.getPromotedAmount());
 };
 
-Receipt.prototype.getItemsString = function() {
+Receipt.prototype.getItemsString = function () {
   var itemsString = '';
   this.cartItems.forEach(function (cartItem) {
     itemsString += cartItem.getString();
@@ -44,7 +45,7 @@ Receipt.prototype.getItemsString = function() {
   return itemsString;
 };
 
-Receipt.prototype. getPromotionsString = function() {
+Receipt.prototype.getPromotionsString = function () {
   var promotionsSting = '';
   this.promotions.forEach(function (promotion) {
     promotionsSting += promotion.getString();

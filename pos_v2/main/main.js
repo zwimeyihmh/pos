@@ -3,7 +3,7 @@ function printReceipt(tags) {
   var cartItems = items.getCartItems();
   var promotions = new Pos(tags);
   var promotedItems = promotions.getPromotions(cartItems);
-  var receipt = new Receipt(cartItems,promotedItems);
+  var receipt = new Receipt(cartItems, promotedItems);
   console.log(receipt.printed());
 }
 

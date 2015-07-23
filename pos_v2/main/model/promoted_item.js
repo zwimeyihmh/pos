@@ -1,4 +1,4 @@
-function PromotedItem(barcode,name,price,count,unit){
+function PromotedItem(barcode, name, price, count, unit) {
   this.barcode = barcode;
   this.name = name;
   this.price = price;
@@ -6,10 +6,11 @@ function PromotedItem(barcode,name,price,count,unit){
   this.unit = unit;
 }
 
-PromotedItem.prototype.subTotal = function(){
+PromotedItem.prototype.subTotal = function () {
   return this.count * this.price;
 };
-PromotedItem.prototype.getString = function(){
-  return  ('名称：' + this.name
-  + '，数量：' + this.count + this.unit + '\n');
-}
+
+PromotedItem.prototype.getString = function () {
+  return ('名称：' + this.name +
+          '，数量：' + this.count + this.unit + '\n');
+};

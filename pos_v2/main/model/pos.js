@@ -1,6 +1,3 @@
-/**
- * Created by wx on 7/23/15.
- */
 function Pos(tags) {
   this.tags = tags;
 }
@@ -21,7 +18,7 @@ Pos.prototype.getCartItems = function () {
   return cartItems;
 };
 
-Pos.prototype.getItem = function(barcode, count, cartItems) {
+Pos.prototype.getItem = function (barcode, count, cartItems) {
   var cartItem = this.findFromCartItem(barcode, cartItems);
   if (cartItem) {
     (cartItem.count) += count;
@@ -31,9 +28,9 @@ Pos.prototype.getItem = function(barcode, count, cartItems) {
       cartItems.push(new CartItem(item.barcode, item.name, item.unit, item.price, count, 0));
     }
   }
-}
+};
 
-Pos.prototype.findFromCartItem = function(barcode, cartItems) {
+Pos.prototype.findFromCartItem = function (barcode, cartItems) {
   var item;
   cartItems.forEach(function (cartItem) {
     if (barcode === cartItem.barcode) {
@@ -41,9 +38,9 @@ Pos.prototype.findFromCartItem = function(barcode, cartItems) {
     }
   });
   return item;
-}
+};
 
-Pos.prototype.findFromAllItems = function(barcode) {
+Pos.prototype.findFromAllItems = function (barcode) {
   var allItems = loadAllItems();
   var cartItem;
   allItems.forEach(function (allItem) {
@@ -55,11 +52,11 @@ Pos.prototype.findFromAllItems = function(barcode) {
 }
 
 
-Pos.prototype.getPromotions = function(cartItems) {
+Pos.prototype.getPromotions = function (cartItems) {
   var promotion;
   var promotions = [];
-  for(var i = 0; i < cartItems.length; i++) {
-      promotion = this.promoteItems(cartItems[i]);
+  for (var i = 0; i < cartItems.length; i++) {
+    promotion = this.promoteItems(cartItems[i]);
     if (promotion) {
 
       cartItems[i].givenCount = promotion.count;
@@ -67,15 +64,15 @@ Pos.prototype.getPromotions = function(cartItems) {
     }
   }
   return promotions;
-}
+};
 
-Pos.prototype.promoteItems = function(item) {
+Pos.prototype.promoteItems = function (item) {
   var promotionsLoad = loadPromotions();
   var promotionsBarcode = promotionsLoad[0].barcodes;
   var promotion;
   promotionsBarcode.forEach(function (promotionBarcode) {
     if (item.barcode === promotionBarcode) {
-      promotion = new PromotedItem(item.barcode,item.name,item.price,Math.floor(item.count/3),item.unit);
+      promotion = new PromotedItem(item.barcode, item.name, item.price, Math.floor(item.count / 3), item.unit);
     }
   });
   return promotion;
